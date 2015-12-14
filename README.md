@@ -11,7 +11,7 @@ index them in order to use the auto completion functionality of Elasticsearch.
 
   See cpv_import_logstash.conf for information on how to use it and necessary modifications
 
-  To make queries the auto completion more relevant we manipulated the query so that the
+To make queries the auto completion more relevant we manipulated the query so that the
 most general CPV categories get suggested first. To achieve the same thing, include
 `boost_by_category.groovy` in your `elasticsearch/config/scripts`. This will allow a query like:
 
