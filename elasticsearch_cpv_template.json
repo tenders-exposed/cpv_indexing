@@ -1,0 +1,77 @@
+{
+ "template": "cpvs",
+ "order": 1,
+ "settings": {
+    "number_of_shards": 1,
+    "analysis": {
+      "filter": {
+        "autocomplete_filter": {
+          "type": "edge_ngram",
+          "min_gram": 1,
+          "max_gram": 20
+        },
+        "original_code_filter": {
+          "type": "edge_ngram",
+          "min_gram": 1,
+          "max_gram": 10
+        },
+        "plain_code_filter":{
+          "type": "edge_ngram",
+          "min_gram": 1,
+          "max_gram": 8
+        }
+      },
+      "analyzer": {
+        "autocomplete": {
+          "type": "custom",
+          "tokenizer": "standard",
+          "filter": [
+            "lowercase",
+            "autocomplete_filter"
+          ]
+        },
+        "original_code_index": {
+          "tokenizer": "keyword",
+          "filter": [ "original_code_filter" ]
+        },
+        "original_code_search": {
+          "tokenizer": "keyword"
+        },
+        "plain_code_index": {
+          "tokenizer": "keyword",
+          "filter": [ "plain_code_filter" ]
+        },
+        "plain_code_search": {
+          "tokenizer": "keyword"
+        }
+      }
+    }
+  },
+  "mappings":{
+    "cpv":{
+      "properties": {
+      	"ORIGINAL_CODE": {
+        	"type": "string",
+        	"analyzer": "original_code_index",
+          "search_analyzer": "original_code_search"
+        },
+  	    "PLAIN_CODE": {
+        	"type": "string",
+        	"analyzer": "plain_code_index",
+          "search_analyzer": "plain_code_search"
+        },
+      	"NUM_DIGITS": {
+        	"type": "integer"
+        },
+        "REAL_CODE": {
+    	    "type": "integer"
+        },
+        "NAME": {
+        	"type": "string",
+          "analyzer":  "autocomplete",
+          "search_analyzer": "standard"
+        }
+      }
+    }
+  }
+}
