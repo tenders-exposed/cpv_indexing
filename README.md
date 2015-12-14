@@ -1,5 +1,5 @@
-  This filder contains the files necessary to import CPV codes with Logstash and
-index them in order to use the auto completion functionality of Elasticsearch.
+  This folder contains the files necessary to import CPV codes with Logstash and
+index them in order to use the auto completion functionality of ElasticSearch.
 
   The file cpvcodes_utf8.csv is the UTF-8 version of the
    [file here](https://github.com/opented/opented/blob/master/cpvcodes/cpvcodes.csv)
@@ -9,11 +9,12 @@ index them in order to use the auto completion functionality of Elasticsearch.
   * elasticsearch 2.2.0
   * logstash 2.1.1
 
-  See cpv_import_logstash.conf for information on how to use it and necessary modifications
+  See `cpv_import_logstash.conf` for information on how to use it and necessary modifications.
 
-To make queries the auto completion more relevant we manipulated the query so that the
-most general CPV categories get suggested first. To achieve the same thing, include
-`boost_by_category.groovy` in your `elasticsearch/config/scripts`. This will allow a query like:
+To make the auto completion more relevant we manipulated the query so that the
+most general CPV codes get suggested first. To achieve the same thing, include
+`boost_by_category.groovy` in your `elasticsearch/config/scripts`. This will allow
+a query like:
 
 ```
 $ curl -XGET 'http://localhost:9200/cpvs/_search?pretty&human' -d '{
